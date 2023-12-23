@@ -15,3 +15,5 @@ async function getBriefDescription(req, res) {
     sendError(res, 503, e);
   }
 }
+
+module.exports.getDescription = getBriefDescription;
