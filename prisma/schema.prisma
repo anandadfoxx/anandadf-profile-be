@@ -6,12 +6,12 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Profile {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id Int @id @default(autoincrement())
   email String  @unique
   name  String
   description String
@@ -19,9 +19,11 @@ model Profile {
 }
 
 model Blogs {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id Int @id @default(autoincrement())
+  date_posted DateTime
   title String @unique
-  description String
+  slug  String @unique
+  description String?
 }
 
 // model Projects {
