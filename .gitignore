@@ -1,5 +1,7 @@
+# MongoDB User Init
+mongo-init.js
 # Keep environment variables out of version control
-.env
+*.env
 # npm
 node_modules
 *.log

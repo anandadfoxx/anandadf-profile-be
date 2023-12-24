@@ -1,4 +1,5 @@
 async function sendSuccess(res, data) {
+  res.status(200);
   res.json(Object.assign({}, { success: true }, data));
   return;
 }
