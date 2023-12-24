@@ -20,7 +20,7 @@ function bindBodyOrError(req, res, ...params) {
   });
   if (invalidParams.length > 0) {
     // return error invalid request
-    sendError(res, 400, `Missing value of ${invalidParams}`);
+    sendError(res, 400, `Missing value of ${invalidParams.join(", ")}`);
     return null;
   }
   
