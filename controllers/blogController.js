@@ -49,6 +49,16 @@ async function postBlog(req, res) {
   const reqBody = bindBodyOrError(req, res, "title", "slug", "description");
   if (reqBody == null) return;
 
+  const existBlogs = await prisma.blogs.findUnique({
+    where: {
+      slug: reqBody.slug
+    }
+  });
+  if (existBlogs) {
+    sendError(res, 409, "Blog already posted, check your slug");
+    return;
+  }
+
   const newBlog = await prisma.blogs.create({
     data: {
       date_posted: (new Date()).toISOString(),

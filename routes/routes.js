@@ -3,10 +3,12 @@ const log = require('../middleware/logger');
 const { sendSuccess } = require('../utils/sendResponse');
 const { getDescription } = require('../controllers/homeController');
 const { getBlogDetail, getBlogs, postBlog } = require('../controllers/blogController');
+const cors = require('cors');
 
 const app = express();
 
 app.use(log);
+app.use(cors())
 app.use(express.json());
 
 // Ping function
