@@ -21,7 +21,7 @@ model Profile {
 model Blogs {
   id Int @id @default(autoincrement())
   date_posted DateTime
-  title String
+  title String @db.VarChar(100)
   slug  String @unique
   description String?
 }

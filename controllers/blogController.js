@@ -49,6 +49,12 @@ async function postBlog(req, res) {
   const reqBody = bindBodyOrError(req, res, "title", "slug", "description");
   if (reqBody == null) return;
 
+  // Title length more than 100 characters, then refuse
+  if (reqBody.title.length > 100) {
+    sendError(res, 400, "'title' cannot be more than 100 characters.");
+    return;
+  }
+
   const existBlogs = await prisma.blogs.findUnique({
     where: {
       slug: reqBody.slug
