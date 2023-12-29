@@ -11,7 +11,7 @@ async function getBlogs(req, res) {
       slug: true,
       date_posted: true,
       title: true,
-      description: true,
+      short_description: true,
     },
     orderBy: {
       date_posted: "desc"
@@ -46,7 +46,7 @@ async function getBlogDetail(req, res) {
 }
 
 async function postBlog(req, res) {
-  const reqBody = bindBodyOrError(req, res, "title", "slug", "description");
+  const reqBody = bindBodyOrError(req, res, "title", "slug", "short_description", "description");
   if (reqBody == null) return;
 
   // Title length more than 100 characters, then refuse
@@ -70,6 +70,7 @@ async function postBlog(req, res) {
       date_posted: (new Date()).toISOString(),
       title: reqBody.title,
       slug: reqBody.slug,
+      short_description: reqBody.short_description,
       description: reqBody.description
     }
   });

@@ -23,7 +23,8 @@ model Blogs {
   date_posted DateTime
   title String @db.VarChar(100)
   slug  String @unique
-  description String?
+  short_description String
+  description String
 }
 
 // model Projects {
