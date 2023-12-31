@@ -1,19 +1,19 @@
 const prisma = require('../model/connection');
 const { sendError, sendSuccess } = require('../utils/sendResponse');
 
-async function getBriefDescription(req, res) {
+async function getProfile(_, res) {
   try {
-    const profile = await prisma.profile.findFirst({
-      select: {
-        description: true,
+    const experiences = await prisma.experiences.findMany({
+      orderBy: {
+        startDate: "desc"
       }
     });
     sendSuccess(res, {
-      "description": profile.description
+      "experiences": experiences
     });
   } catch (e) {
     sendError(res, 503, e);
   }
 }
 
-module.exports.getDescription = getBriefDescription;
+module.exports = getProfile;

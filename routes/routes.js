@@ -1,7 +1,7 @@
 const express = require('express');
 const log = require('../middleware/logger');
 const { sendSuccess } = require('../utils/sendResponse');
-const { getDescription } = require('../controllers/homeController');
+const getProfile = require('../controllers/homeController');
 const { getBlogDetail, getBlogs, postBlog, editBlog, deleteBlog } = require('../controllers/blogController');
 const cors = require('cors');
 const authenticate = require('../middleware/authenticate');
@@ -21,7 +21,7 @@ app.get('/ping', (_, res) => {
 });
 
 // Home page 
-app.get('/profile/description', getDescription);
+app.get('/profile/', getProfile);
 
 // Blogs page
 app.get('/blog/', getBlogs);

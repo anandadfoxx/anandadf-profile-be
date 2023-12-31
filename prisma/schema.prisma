@@ -16,6 +16,7 @@ model Profile {
   name  String
   description String
   cv_link String
+  experienes Experiences[]
 }
 
 model Blogs {
@@ -27,10 +28,18 @@ model Blogs {
   description String
 }
 
+model Experiences {
+  id Int @id @default(autoincrement())
+  role String
+  organization String
+  description String
+  startDate DateTime
+  endDate DateTime?
+  
+  profileId Int @unique
+  profile Profile @relation(fields: [profileId], references: [id])
+}
+
 // model Projects {
-
-// }
-
-// model Organizations {
 
 // }
