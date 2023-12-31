@@ -6,8 +6,10 @@ function bindBodyOrError(req, res, ...params) {
     case 'GET':
       body = req.query;
       break;
-  
     case 'POST':
+      body = req.body;
+      break;
+    case 'PUT':
       body = req.body;
       break;
   }

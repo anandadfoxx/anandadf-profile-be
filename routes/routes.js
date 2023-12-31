@@ -2,8 +2,10 @@ const express = require('express');
 const log = require('../middleware/logger');
 const { sendSuccess } = require('../utils/sendResponse');
 const { getDescription } = require('../controllers/homeController');
-const { getBlogDetail, getBlogs, postBlog } = require('../controllers/blogController');
+const { getBlogDetail, getBlogs, postBlog, editBlog, deleteBlog } = require('../controllers/blogController');
 const cors = require('cors');
+const authenticate = require('../middleware/authenticate');
+const authorizeDeveloper = require('../middleware/authorize');
 
 const app = express();
 
@@ -24,6 +26,8 @@ app.get('/profile/description', getDescription);
 // Blogs page
 app.get('/blog/', getBlogs);
 app.get('/blog/:blogSlug', getBlogDetail);
-app.post('/blog', postBlog);
+app.post('/blog', authenticate, authorizeDeveloper, postBlog);
+app.put('/blog/:blogSlug', authenticate, authorizeDeveloper, editBlog);
+app.delete('/blog/:blogSlug', authenticate, authorizeDeveloper, deleteBlog);
 
 module.exports = app;

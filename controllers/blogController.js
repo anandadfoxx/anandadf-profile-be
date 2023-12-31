@@ -1,5 +1,6 @@
 const prisma = require("../model/connection");
 const bindBodyOrError = require("../utils/binds");
+const { ROLE_DEVELOPER } = require("../utils/consts");
 const { sendError, sendSuccess } = require("../utils/sendResponse");
 
 async function getBlogs(req, res) {
@@ -83,6 +84,47 @@ async function postBlog(req, res) {
   });
 }
 
+async function editBlog(req, res) {
+  const blogSlug = req.params['blogSlug'];
+  const reqBody = bindBodyOrError(req, res, "title", "short_description", "description");
+  const updateBlog = await prisma.blogs.update({
+    where: {
+      slug: blogSlug
+    },
+    data: {
+      title: reqBody['title'],
+      short_description: reqBody['short_description'],
+      description: reqBody['description']
+    }
+  });
+  if (!updateBlog) {
+    sendError(res, 404, "Blog not found.");
+    return;
+  }
+  sendSuccess(res, {
+    "message": `Blog ${blogSlug} has been edited successfully.`
+  });
+}
+
+async function deleteBlog(req, res) {
+  try {
+    const blogSlug = req.params['blogSlug'];
+    await prisma.blogs.delete({
+      where: {
+        slug: blogSlug
+      }
+    });
+    sendSuccess(res, {
+      "message": `Blog ${blogSlug} has been deleted successfully.`
+    });
+  } catch (err) {
+    sendError(res, 404, "Blog not found.");
+    return;
+  }
+}
+
 module.exports.getBlogs = getBlogs;
 module.exports.getBlogDetail = getBlogDetail;
 module.exports.postBlog = postBlog;
+module.exports.editBlog = editBlog;
+module.exports.deleteBlog = deleteBlog;
