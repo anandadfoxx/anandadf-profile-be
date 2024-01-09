@@ -3,12 +3,14 @@ version: '3.8'
 services:
   db:
     image: postgres:latest
+    restart: unless-stopped
     ports:
       - 5432:5432
     env_file:
       - .db.env
   backend:
     image: oxxydde/my-profile-backend
+    restart: unless-stopped
     build: .
     ports:
       - 8080:8080
