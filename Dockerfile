@@ -1,18 +1,18 @@
-FROM node:latest
+FROM node:18-alpine
 
-RUN MKDIR /app
+ENV NODE_ENV=production
+
+RUN adduser -D runner \
+    && mkdir /app \
+    && chown -R runner:runner /app \
+    && apk add --no-cache openssl
+
 WORKDIR /app
+USER runner
 
-COPY controllers controllers/
-COPY middleware middleware/
-COPY model model/
-COPY prisma prisma/
-COPY routes routes/
-COPY utils utils/
-COPY index.js .
-COPY package.json .
+COPY --chown=runner:runner . .
 
-RUN npm i
+RUN npm ci
 
 EXPOSE 8080
-ENTRYPOINT [ "node" "index.js" ]
+CMD [ "index.js" ]
